@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+#
+# Setup variables using grains['os_family'] based logic.
+# You just need to add the key:values for an `os_family` that differ
+# from `defaults.yaml`.
+# Only add an `os_family` which is/will be supported by the formula
+#
+# If you do not need to provide defaults via the `os_family` grain,
+# you will need to provide at least an empty dict in this file, e.g.
+# osmap: {}
+---
+{%- if grains.os == 'MacOS' %}
+    {%- set macos_rootuser = salt['cmd.run']("stat -f '%Su' /dev/console") %}
+    {%- set macos_rootgroup = salt['cmd.run']("stat -f '%Sg' /dev/console") %}
+{%- endif %}
+
+Windows:
+  pkg:
+    archive:
+      tag: windows
+      source_hash: 642fb6af3dbb777dc007f01cd412d6cb9d5f8e84c45dc1e323d13ce32316dc6b
+
+MacOS:
+  rootuser: {{ macos_rootuser | d('') }}
+  rootgroup: {{ macos_rootgroup | d('') }}
+  environ_file: /etc/defaults/androidstudio.sh
+  pkg:
+    suffix: dmg
+    macapp:
+      tag: mac
+      source_hash: 94d337b4bb743a9676dae78d60c61bcb52bfdea771edcb4be07c6016da29942f
