@@ -3,15 +3,13 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import androidstudio with context %}
-{%- from tplroot ~ "/macros.jinja" import format_kwargs with context %}
+{%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
 
 androidstudio-package-archive-install-extract:
   pkg.installed:
     - names:
-      - curl
       - tar
       - gzip
-  file.directory:
     - name: {{ androidstudio.pkg.archive.name }}
     - user: {{ androidstudio.rootuser }}
     - group: {{ androidstudio.rootgroup }}
@@ -32,3 +30,15 @@ androidstudio-package-archive-install-extract:
         splay: 10
     - user: {{ androidstudio.rootuser }}
     - group: {{ androidstudio.rootgroup }}
+
+    {%- if grains.kernel|lower == 'linux' and androidstudio.linux.altpriority|int == 0 %}
+
+androidstudio-archive-install-file-symlink-androidstudio:
+  file.symlink:
+    - onlyif: {{ grains.kernel|lower == 'linux' }}
+    - name: {{ androidstudio.dir.archive }}/bin/androidstudio
+    - target: {{ androidstudio.config.path }}/bin/androidstudio
+    - force: True
+    - require:
+      - archive: androidstudio-package-archive-install-extract
+    {%- endif %}

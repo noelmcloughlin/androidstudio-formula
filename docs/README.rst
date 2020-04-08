@@ -47,7 +47,7 @@ Available states
    :local:
 
 ``androidstudio``
-^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 *Meta-state (This is a state that includes other states)*.
 
@@ -55,27 +55,27 @@ This installs AndroidStudio and configuration.
 
 
 ``androidstudio.archive``
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will install AndroidStudio from archive on GNU/Linux.
 
 ``androidstudio.macapp``
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will install AndroidStudio macpackage on MacOS.
 
 ``androidstudio.macapp.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove AndroidStudio macpackage on MacOS.
 
 ``androidstudio.archive.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove AndroidStudio package on GNU/Linux.
 
 ``androidstudio.clean``
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
 
 *Meta-state (This is a state that includes other states)*.
 

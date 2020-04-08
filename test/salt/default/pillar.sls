@@ -7,5 +7,7 @@ androidstudio:
   pkg:
     uri: https://dl.google.com/android/studio/install
     use_upstream_archive: true
+    config: {}
     archive:
+      tag: linux
       source_hash: 79c3e7069228de5db1c9252e078fcbe9b7d56cc54c8ce6f87034685b298f2413

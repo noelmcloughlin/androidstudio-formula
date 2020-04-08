@@ -8,7 +8,7 @@
 #
 # If you do not need to provide defaults via the `os_family` grain,
 # you will need to provide at least an empty dict in this file, e.g.
-# osmap: {}
+# osfamilymap: {}
 ---
 {%- if grains.os == 'MacOS' %}
     {%- set macos_rootuser = salt['cmd.run']("stat -f '%Su' /dev/console") %}
@@ -17,6 +17,7 @@
 
 Windows:
   pkg:
+    suffix: zip
     archive:
       tag: windows
       source_hash: 642fb6af3dbb777dc007f01cd412d6cb9d5f8e84c45dc1e323d13ce32316dc6b
@@ -26,7 +27,10 @@ MacOS:
   rootgroup: {{ macos_rootgroup | d('') }}
   environ_file: /etc/defaults/androidstudio.sh
   pkg:
+    uri_dir: install
     suffix: dmg
+    use_upstream_archive: false
+    use_upstream_macapp: macapp
     macapp:
       tag: mac
       source_hash: 94d337b4bb743a9676dae78d60c61bcb52bfdea771edcb4be07c6016da29942f

@@ -3,13 +3,13 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- import_yaml tplroot ~ "/defaults.yaml" as default_settings %}
-{%- import_yaml tplroot ~ "/osmap.yaml" as osmap %}
+{%- import_yaml tplroot ~ "/osfamilymap.yaml" as osfamilymap %}
 
 {%- set _config = salt['config.get'](tplroot, default={}) %}
 {%- set defaults = salt['grains.filter_by'](
       default_settings,
       default=tplroot,
-      merge=salt['grains.filter_by']( osmap, grain='os',
+      merge=salt['grains.filter_by']( osfamilymap, grain='os_family',
         merge=salt['grains.filter_by']( _config, default='lookup'
         )
       )
@@ -17,17 +17,19 @@
 %}
 {%- set ide = salt['grains.filter_by']( {'defaults': defaults}, default='defaults', merge=_config) %}
 
-{%- set dir = '%s-%s-%s'.format(ide.pkg.name, ide.version, ide.tag) %}
-{%- set url = '%s/%s/%s-%s-%s.%s'.format(ide.pkg.uri, ide.version, ide.pkg.name, ide.build, ide.pkg.tag, ide.pkg.suffix) %}  # noqa 204
-
 {%- if ide.pkg.use_upstream_macapp %}
-       {%- do ide.pkg.archive.update({ 'name': '/Applications', 'source': url }) %}
+       {%- set url = '%s/%s/%s/%s-%s-%s.%s'|format(ide.pkg.uri, ide.pkg.uri_dir, ide.version, ide.pkg.name, ide.build, ide.pkg.macapp.tag, ide.pkg.suffix) %}  # noqa 204
+       {%- set dir = '%s-%s-%s'|format(ide.pkg.name, ide.version, ide.pkg.macapp.tag) %}
+       {%- do ide.pkg.macapp.update({ 'name': '/Applications', 'source': url }) %}
 {%- endif %}
 
 {%- if ide.pkg.use_upstream_archive %}
-       {%- set dir = '%s-%s-%s-%s'.format(ide.pkg.name, ide.version, ide.build, ide.tag) %}
-       {%- do ide.config.update({'path': ide.dir.archive + '/' + dir }) %},
-       {%- do ide.pkg.archive.update({'name': ide.dir.archive + '/' + dir, 'source': url }) %}
+       {%- set url = '%s/%s/%s/%s-%s-%s.%s'|format(ide.pkg.uri, ide.pkg.uri_dir, ide.version, ide.pkg.name, ide.build, ide.pkg.archive.tag, ide.pkg.suffix) %}  # noqa 204
+       {%- set dir = '%s-%s-%s'|format(ide.pkg.name, ide.version, ide.pkg.archive.tag) %}
+       {%- do ide.config.update({'path': ide.dir.archive ~ '/' ~ dir }) %},
+       {%- do ide.pkg.archive.update({'name': ide.dir.archive ~ '/' ~ dir, 'source': url }) %}
+{%- else %}
+       {%- do ide.pkg.archive.update({'name': 'google-chrome-stable' }) %}
 {%- endif %}
 
-{%- set androidstudio = ide%}
+{%- set androidstudio = ide %}

@@ -8,14 +8,9 @@ androidstudio:
     - dummy=dummy
   pkg:
     uri: https://dl.google.com/android/studio/install
-                  {%- if grains.kernel|lower in ('linux',) %}
     use_upstream_archive: true
-                  {%- elif grains.kernel|lower in ('macos',) %}
     use_upstream_macapp: true
-                  {%- endif %}
     archive:
       source_hash: 79c3e7069228de5db1c9252e078fcbe9b7d56cc54c8ce6f87034685b298f2413
-    archive:
-      source_hash: 642fb6af3dbb777dc007f01cd412d6cb9d5f8e84c45dc1e323d13ce32316dc6b
     macapp:
       source_hash: 94d337b4bb743a9676dae78d60c61bcb52bfdea771edcb4be07c6016da29942f

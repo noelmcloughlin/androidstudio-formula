@@ -171,7 +171,7 @@ suites:
     verifier:
       inspec_tests:
         - path: test/integration/default
-  - name: archive
+  - name: deb
     provisioner:
       state_top:
         base:
@@ -183,7 +183,23 @@ suites:
             '*':
               - androidstudio
       pillars_from_files:
-        androidstudio.sls: test/salt/archive/pillar.sls
+        androidstudio.sls: test/salt/deb/pillar.sls
     verifier:
       inspec_tests:
-        - path: test/integration/archive
+        - path: test/integration/deb
+  - name: rpm
+    provisioner:
+      state_top:
+        base:
+          '*':
+            - androidstudio
+      pillars:
+        top.sls:
+          base:
+            '*':
+              - androidstudio
+      pillars_from_files:
+        androidstudio.sls: test/salt/rpm/pillar.sls
+    verifier:
+      inspec_tests:
+        - path: test/integration/rpm

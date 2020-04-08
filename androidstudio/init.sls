@@ -8,10 +8,9 @@
 include:
   - .macapp
 
-             {%- elif androidstudio.use_upstream_archive %}
+             {%- else %}
 include:
   - .archive
-  - .config
 
              {%- endif %}
 
