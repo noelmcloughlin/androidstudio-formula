@@ -7,7 +7,7 @@ androidstudio:
   environ:
     - dummy=dummy
   pkg:
-    uri: https://dl.google.com/android/studio/install
+    uri: https://dl.google.com/android/studio
     use_upstream_archive: true
     use_upstream_macapp: true
     archive:

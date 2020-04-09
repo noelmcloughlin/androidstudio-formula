@@ -28,8 +28,6 @@
        {%- set dir = '%s-%s-%s'|format(ide.pkg.name, ide.version, ide.pkg.archive.tag) %}
        {%- do ide.config.update({'path': ide.dir.archive ~ '/' ~ dir }) %},
        {%- do ide.pkg.archive.update({'name': ide.dir.archive ~ '/' ~ dir, 'source': url }) %}
-{%- else %}
-       {%- do ide.pkg.archive.update({'name': 'google-chrome-stable' }) %}
 {%- endif %}
 
 {%- set androidstudio = ide %}

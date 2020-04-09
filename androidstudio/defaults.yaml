@@ -9,8 +9,7 @@ androidstudio:
   dir:
     tmp: /tmp/androidstudio
     archive: /usr/local
-  config:
-    path: ''
+  config: {}
   environ:
     - dummy=dummy
   environ_file: /etc/default/androidstudio.sh
